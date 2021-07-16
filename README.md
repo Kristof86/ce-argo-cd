@@ -1,7 +1,8 @@
 # ce-aks-cli
 
 Defines a docker image with a couple of CLI-tools to access an AKS cluster.
-At this moment the azure cli (az) cannot be installed on a standard Acerta laptop.
+
+At the moment of writing, the azure cli (az) cannot be installed on a standard Acerta laptop.
 Also, when dealing with multiple clusters and/or azure/aks-accounts at the same time, it is often safer/handier to run the CLI in a separate container so that the 'standard' .kube/config (with most probably a specual okteto-user/account) on the laptop is preserved.
 
 https://argoproj.github.io/argo-cd/getting_started/
