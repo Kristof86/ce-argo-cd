@@ -17,15 +17,15 @@ docker tag cbonami/ce-aks-cli cbonami/ce-aks-cli:latest
 docker push cbonami/ce-aks-cli:v1
 docker push cbonami/ce-aks-cli:latest
 ```
-The run it:
+Now browse to Azure portal (https://portal.azure.com) and retrieve AKS connect info from the right AKS-cluster. 
+Select the right cluster --> 'Overview'-tab --> 'Connect'.
+
+Then run the container:
 ```bash
 docker run -it cbonami/ce-aks-cli
 ```
 
-Go to azure portal (https://portal.azure.com) and retrieve AKS connect info from the right AKS-cluster. 
-Click on the right cluster and in the 'Overview'-tab, you click 'Connect'.
-
-Inside container, log in to Azure and AKS:
+Once inside container, log in to Azure and AKS:
 
 ```bash
 # login to your azure account
