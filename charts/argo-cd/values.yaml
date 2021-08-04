@@ -20,11 +20,9 @@ argo-cd:
           url: https://argoproj.github.io/argo-helm
         - type: git
           name: argocd-ce-calendar-parent
-          url: ssh://git@github.com:Acerta-DEV/argocd-ce-calendar-parent.git
-          #url: https://github.com/Acerta-DEV/argocd-ce-calendar-parent
+          url: ssh://git@github.com/Acerta-DEV/argocd-ce-calendar-parent.git
           insecure: true
           insecureIgnoreHostKey: true
-          # private ssh key must first be base64-encoded and stored as a secret (see README)
           sshPrivateKeySecret:
             name: acerta-dev-repo-creds
             key: sshPrivateKey
