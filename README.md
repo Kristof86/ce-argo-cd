@@ -46,11 +46,13 @@ k get nodes
 ```bash
 # determine latest version of argocd chart
 helm repo add argo-cd https://argoproj.github.io/argo-helm
+helm dep update charts/argo-cd/
 helm search repo argocd
 
 # !! change versions of chart (in Chart.yaml) and image (in values.yaml)
 
 # https://www.arthurkoziel.com/setting-up-argocd-with-helm/
+kubectl create ns argocd
 helm install -n argocd argo-cd charts/argo-cd/
 
 # open it up to the internet
@@ -69,6 +71,10 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 
 Point browser to [https://argocd.okt.global.dns/](https://argocd.okt.global.dns/)
 
+Deploy root app:
+```bash
+helm template apps/ | kubectl apply -n argocd -f -
+```
 ## Helm repo by GitHub
 
 > Currently we don't use the ce-helm-charts github repo (yet) but the instructions still apply 
@@ -81,7 +87,7 @@ helm repo add acerta-helm https://acerta-dev.github.io/ce-helm-charts
 ```
 To install a chart:
 ```bash
-helm install my-<chart-name> acert-helm/<chart-name>
+helm install my-<chart-name> acerta-helm/<chart-name>
 ```
 To uninstall the chart:
 ```bash
