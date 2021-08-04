@@ -2,9 +2,10 @@
 
 Purpose:
 * Sets up ArgoCD in auto-maintenance mode
-* Also ontains a Dockerfile with a couple of standard CLI-tools to access an AKS cluster, `kubectl`, `helm`, argocd cli, etc 
+* Also contains a Dockerfile with a couple of standard CLI-tools to access an AKS cluster, `kubectl`, `helm`, argocd cli, etc 
   
-At this moment the azure cli (az) cannot be installed on a standard Acerta laptop. Also, when dealing with multiple clusters and/or azure/aks-accounts at the same time, it is often safer/handier to run the CLI in a separate container so that the 'standard' .kube/config (with most probably a specual okteto-user/account) on the laptop is preserved.
+At this moment the azure cli (az) cannot be installed on a standard Acerta laptop. 
+Also, when dealing with multiple clusters and/or azure/aks-accounts at the same time, it is often safer/handier to run the CLI in a separate container so that the 'standard' .kube/config (containing most probably a special okteto-user/account) on the main laptop-host is preserved.
 
 ## Dockerfile with CLI tools
 
