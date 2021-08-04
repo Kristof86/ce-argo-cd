@@ -34,24 +34,22 @@ az login
     
 # see Overview tab of AKS cluster (Connect-button)
 az account set --subscription 1824decd-b137-4338-897f-e349d0c52e81
-# az aks get-credentials --resource-group rg-ace-devtst-okteto --name aks-ace-devtst-okteto
 az aks get-credentials --overwrite --resource-group rg-ace-devtst-okteto --name aks-ace-devtst-okteto --admin
 
 kubectl get nodes
 ```
 
-## ArgoCD
+## ArgoCD Installation
 
 ```bash
 # determine latest version of argocd chart
 helm repo add argo-cd https://argoproj.github.io/argo-helm
 helm search repo argocd
 
-# https://argoproj.github.io/argo-cd/getting_started/
-#kubectl create namespace argocd
-#kubectl apply -n argocd -f ./install.yaml
+# !! change versions of chart (in Chart.yaml) and image (in values.yaml)
 
 # https://www.arthurkoziel.com/setting-up-argocd-with-helm/
+helm install -n argocd argo-cd charts/argo-cd/
 
 ```
 Note that:

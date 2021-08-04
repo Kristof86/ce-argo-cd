@@ -9,6 +9,10 @@ RUN echo '\n' >> ~/.bashrc && echo 'alias k="kubectl"' >> ~/.bashrc
 RUN curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64 && chmod +x /usr/local/bin/argocd
 RUN echo 'alias a="argocd"' >> ~/.bashrc
 
+# install helm
+RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+RUN chmod 700 get_helm.sh && ./get_helm.sh
+
 RUN mkdir /workdir
 WORKDIR /workdir
 
