@@ -12,7 +12,7 @@ spec:
     - http:
         paths:
           - backend:
-              serviceName: argocd-server
+              serviceName: argo-cd-argocd-server
               servicePort: http
       host: argocd.okt.global.dns
   tls:
@@ -33,7 +33,7 @@ spec:
     - http:
         paths:
           - backend:
-              serviceName: argocd-server
+              serviceName: argo-cd-argocd-server
               servicePort: https
       host: grpc.argocd.okt.global.dns
   tls:

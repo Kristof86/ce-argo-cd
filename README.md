@@ -51,20 +51,21 @@ helm search repo argocd
 # https://www.arthurkoziel.com/setting-up-argocd-with-helm/
 helm install -n argocd argo-cd charts/argo-cd/
 
+# open it up to the internet
+kubectl apply -f ingress.yaml
 ```
 Note that:
-* installCRDs is set to false. This is required when using Helm v3 to avoid warnings about nonexistant webhooks
+* `installCRDs` is set to false. This is required when using Helm v3 to avoid warnings about nonexistant webhooks
 * The Helm chart defaults to Argo CD version x.y.z. To use the latest version we bump global.image.tag to 2.0.5
 * We disable the dex component that is used for integration with external auth providers
-* We start the server with the --insecure flag to serve the Web UI over http 
+* We start the server with the `--insecure` flag to serve the Web UI over http (see option 2 in [https://argoproj.github.io/argo-cd/operator-manual/ingress/](https://argoproj.github.io/argo-cd/operator-manual/ingress/))
 
 ```bash
-# option 2 in https://argoproj.github.io/argo-cd/operator-manual/ingress/
-kubectl apply -n argocd -f ./ingress.yaml
-
-# recover credentials
+# recover credentials for user 'admin'
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 ```
+
+Point browser to [https://argocd.okt.global.dns/](https://argocd.okt.global.dns/)
 
 ## Helm repo by GitHub
 
