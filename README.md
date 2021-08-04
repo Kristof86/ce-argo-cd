@@ -52,6 +52,26 @@ helm search repo argocd
 
 # !! change versions of chart (in Chart.yaml) and image (in values.yaml)
 
+# install a secret with a base64-encoded private ssh-key to get access to the github repo's
+# this secret will be referred by repositories section in values.yaml (see ./charts/argo-cd)
+base64 ~/.ssh/id_ed25519
+LS0tLS1CRUdJTiBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0KYjNCbGJuTnphQzFyWlhrdGRqRUFB
+QUFBQkc1d...
+
+cat <<EOF | kubectl create -n argocd -f -
+apiVersion: v1
+kind: Secret
+metadata:
+    name: acerta-dev-repo-creds
+    namespace: argocd
+    labels:
+        argocd.argoproj.io/secret-type: repo-creds
+data:
+    sshPrivateKey: |
+        LS0tLS1CRUdJTiBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0KYjNCbGJuTnphQzFyWlhrdGRqRUFB
+        QUFBQkc1d....
+EOF
+
 # https://www.arthurkoziel.com/setting-up-argocd-with-helm/
 kubectl create ns argocd
 helm install -n argocd argo-cd charts/argo-cd/

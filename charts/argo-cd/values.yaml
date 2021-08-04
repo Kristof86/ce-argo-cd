@@ -1,3 +1,4 @@
+# overrides https://github.com/argoproj/argo-helm/blob/master/charts/argo-cd/values.yaml
 argo-cd:
   installCRDs: false
   global:
@@ -17,7 +18,16 @@ argo-cd:
         - type: helm
           name: argo-cd
           url: https://argoproj.github.io/argo-helm
-
+        - type: git
+          name: argocd-ce-calendar-parent
+          url: ssh://git@github.com:Acerta-DEV/argocd-ce-calendar-parent.git
+          #url: https://github.com/Acerta-DEV/argocd-ce-calendar-parent
+          insecure: true
+          insecureIgnoreHostKey: true
+          # private ssh key must first be base64-encoded and stored as a secret (see README)
+          sshPrivateKeySecret:
+            name: acerta-dev-repo-creds
+            key: sshPrivateKey
       # https://dev.to/camptocamp-ops/use-kustomize-to-post-render-helm-charts-in-argocd-2ml6
       configManagementPlugins: |
         - name: kustomized-helm
