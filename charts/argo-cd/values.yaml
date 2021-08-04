@@ -26,6 +26,14 @@ argo-cd:
           sshPrivateKeySecret:
             name: acerta-dev-repo-creds
             key: sshPrivateKey
+        - type: git
+          name: ce-calendar-mgmt
+          url: ssh://git@github.com/Acerta-DEV/ce-calendar-mgmt.git
+          insecure: true
+          insecureIgnoreHostKey: true
+          sshPrivateKeySecret:
+            name: acerta-dev-repo-creds
+            key: sshPrivateKey
       # https://dev.to/camptocamp-ops/use-kustomize-to-post-render-helm-charts-in-argocd-2ml6
       configManagementPlugins: |
         - name: kustomized-helm
@@ -34,5 +42,4 @@ argo-cd:
             args: ["helm dependency build || true"]
           generate:
             command: ["/bin/sh", "-c"]
-            #args: ["helm template . --name-template $ARGOCD_APP_NAME --namespace $ARGOCD_APP_NAMESPACE --include-crds > all.yaml && kustomize build"]
             args: ["helm template ../../helm_base --name-template $ARGOCD_APP_NAME --include-crds > ../../helm_base/all.yml && kustomize build"]
