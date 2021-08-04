@@ -1,7 +1,7 @@
 # ce-argo-cd
 
 Purpose:
-* Sets up ArgoCD in auto-maintenance mode
+* Sets up ArgoCD in self-management mode i.e. ArgoCD will manage itself as any other application that it can manage
 * Also contains a Dockerfile with a couple of standard CLI-tools to access an AKS cluster, `kubectl`, `helm`, argocd cli, etc 
   
 At this moment the azure cli (az) cannot be installed on a standard Acerta laptop. 
@@ -45,6 +45,7 @@ k get nodes
 
 ```bash
 # determine latest version of argocd chart
+# chart docs here: https://github.com/argoproj/argo-helm/tree/master/charts/argo-cd
 helm repo add argo-cd https://argoproj.github.io/argo-helm
 helm dep update charts/argo-cd/
 helm search repo argocd
@@ -75,6 +76,17 @@ Deploy root app:
 ```bash
 helm template apps/ | kubectl apply -n argocd -f -
 ```
+
+![](./img/argo_after_installation.png)
+
+> Note: I had to push the 'Refresh' button to get rid of the health-status 'Processing'
+
+As you can see in the dashboard, the root app also contains an application for ArgoCD itself. I.e. ArgoCD manages itself. So we can delete it from helm:
+
+```bash
+kubectl delete secret -n argocd -l owner=helm,name=argo-cd
+```
+
 ## Helm repo by GitHub
 
 > Currently we don't use the ce-helm-charts github repo (yet) but the instructions still apply 
