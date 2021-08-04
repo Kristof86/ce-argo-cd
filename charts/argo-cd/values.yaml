@@ -20,7 +20,7 @@ argo-cd:
           url: https://argoproj.github.io/argo-helm
         - type: git
           name: argocd-ce-calendar-parent
-          url: https://github.com/Acerta-DEV//argocd-ce-calendar-parent.git
+          url: https://github.com/Acerta-DEV/argocd-ce-calendar-parent.git
           passwordSecret:
             name: acerta-dev-repo-pat
             key: password
