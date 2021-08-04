@@ -1,18 +1,18 @@
-# ce-aks-cli
+# ce-argo-cd
 
-Defines a docker image with a couple of CLI-tools to access an AKS cluster.
-At this moment the azure cli (az) cannot be installed on a standard Acerta laptop.
-Also, when dealing with multiple clusters and/or azure/aks-accounts at the same time, it is often safer/handier to run the CLI in a separate container so that the 'standard' .kube/config (with most probably a specual okteto-user/account) on the laptop is preserved.
+Purpose:
+* Sets up ArgoCD in auto-maintenance mode
+* Also ontains a Dockerfile with a couple of standard CLI-tools to access an AKS cluster, `kubectl`, `helm`, argocd cli, etc 
+  
+At this moment the azure cli (az) cannot be installed on a standard Acerta laptop. Also, when dealing with multiple clusters and/or azure/aks-accounts at the same time, it is often safer/handier to run the CLI in a separate container so that the 'standard' .kube/config (with most probably a specual okteto-user/account) on the laptop is preserved.
 
-## Run AZ cli on Acerta Laptop
+## Dockerfile with CLI tools
 
 The following build and then pushes to DockerHub (docker.io). Of course, you should use your own DockerHub account (or don't push).
 
 ```bash
 docker build -t cbonami/ce-aks-cli .
-docker tag cbonami/ce-aks-cli cbonami/ce-aks-cli:v1
 docker tag cbonami/ce-aks-cli cbonami/ce-aks-cli:latest
-docker push cbonami/ce-aks-cli:v1
 docker push cbonami/ce-aks-cli:latest
 ```
 Then run it, while mounting the root folder of this project in the container's workdir:
@@ -23,7 +23,7 @@ docker run -it -v ${PWD}:/workdir cbonami/ce-aks-cli
 docker run -it -v %cd%:/workdir cbonami/ce-aks-cli
 ```
 
-Go to azure portal (https://portal.azure.com) and retrieve AKS connect info from the right AKS-cluster. 
+On your host machine, point your browser to Azure portal (https://portal.azure.com) and retrieve AKS connect info from the right AKS-cluster. 
 Click on the right cluster and in the 'Overview'-tab, you click 'Connect'.
 
 Inside container, log in to Azure and AKS:
@@ -36,7 +36,8 @@ az login
 az account set --subscription 1824decd-b137-4338-897f-e349d0c52e81
 az aks get-credentials --overwrite --resource-group rg-ace-devtst-okteto --name aks-ace-devtst-okteto --admin
 
-kubectl get nodes
+# verify
+k get nodes
 ```
 
 ## ArgoCD Installation
@@ -107,7 +108,8 @@ EOF
 
 ## Container Registry by GitHub
 
-https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
+GitHub offers a Container Registry (ghcr.io). More info [here](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
+).
 
 ```bash
 echo "ghp_****" | docker login ghcr.io -u <you> --password-stdin
