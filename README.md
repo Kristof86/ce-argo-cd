@@ -80,7 +80,7 @@ helm install -n argocd argo-cd charts/argo-cd/
 # open it up to the internet
 kubectl apply -f ingress.yaml
 ```
-Note that:
+Note the following tuning for ArgoCD:
 * `installCRDs` is set to false. This is required when using Helm v3 to avoid warnings about nonexistant webhooks
 * The Helm chart defaults to Argo CD version x.y.z. To use the latest version we bump global.image.tag to 2.0.5
 * We disable the dex component that is used for integration with external auth providers
