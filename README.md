@@ -116,7 +116,7 @@ For the time being, I've chosen [Bitnami Sealed Secrets](https://github.com/bitn
 It is installed by ArgoCD as an [standard ArgoCD Application pointing to the official helm chart for `sealed-secrets`](./apps/templates/sealed-secrets.yaml).
 
 It allows us to manage our Secrets also in git, just like any other k8s resource.
-We encrypt your Secret into a SealedSecret, which is safe to store - even to a public repository. 
+We encrypt the Secret into a SealedSecret, which is safe to store - even to a public repository. 
 The SealedSecret can be decrypted only by the controller running in the target cluster and nobody else (not even the original author) is able to obtain the original Secret from the SealedSecret.
 But we can [backup Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets#how-can-i-do-a-backup-of-my-sealedsecrets).
 
