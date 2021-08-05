@@ -14,6 +14,9 @@ RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master
 RUN chmod 700 get_helm.sh && ./get_helm.sh
 RUN echo 'alias h="helm"' >> ~/.bashrc
 
+# install kubeseal
+RUN curl -Lo /usr/local/bin/kubeseal https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.16.0/kubeseal-linux-amd64 && chmod +x /usr/local/bin/kubeseal
+
 RUN mkdir /workdir
 WORKDIR /workdir
 
