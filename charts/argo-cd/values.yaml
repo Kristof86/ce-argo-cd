@@ -21,6 +21,9 @@ argo-cd:
         - type: helm
           name: ce-helm
           url: https://acerta-dev.github.io/ce-helm-charts
+        - type: helm
+          name: elastic
+          url: https://helm.elastic.co
         - type: git
           name: argocd-ce-calendar-parent
           url: https://github.com/Acerta-DEV/argocd-ce-calendar-parent.git
