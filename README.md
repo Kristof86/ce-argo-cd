@@ -108,42 +108,33 @@ As you can see in the dashboard, the root app also contains an application for A
 kubectl delete secret -n argocd -l owner=helm,name=argo-cd
 ```
 
-## Helm repo by GitHub
+Plz note that ALL management of ArgoCD, like adding git/helm repositories etc, needs to be done via the argo-cd chart, more precisely, the [values.yaml](charts/argo-cd/values.yaml) of that chart.
 
-> Currently we don't use the ce-helm-charts github repo (yet) but the instructions still apply 
+## Secret Management
+
+For the time being, I've chosen [Bitnami Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets). It's a kubernetes controller (CRD), just like ArgoCD is.
+It is installed by ArgoCD as an [standard ArgoCD Application pointing to the official helm chart for `sealed-secrets`](./apps/templates/sealed-secrets.yaml).
+
+It allows use to manage our Secrets also in git, just like any other k8s resource.
+We encrypt your Secret into a SealedSecret, which is safe to store - even to a public repository. 
+The SealedSecret can be decrypted only by the controller running in the target cluster and nobody else (not even the original author) is able to obtain the original Secret from the SealedSecret.
+But we can [backup Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets#how-can-i-do-a-backup-of-my-sealedsecrets).
+
+## Helm repo by GitHub
 
 We [turned GitHub into a Helm Repository](https://harness.io/blog/devops/helm-chart-repo/) using the [Github Releaser Action](https://helm.sh/docs/howto/chart_releaser_action/#github-actions-workflow).
 The GitHub repo is [https://github.com/Acerta-DEV/ce-helm-charts](https://github.com/Acerta-DEV/ce-helm-charts).
 This corresponds to a Helm Repo on `github.io` that you can add:
 ```bash
-helm repo add acerta-helm https://acerta-dev.github.io/ce-helm-charts
+helm repo add ce-helm https://acerta-dev.github.io/ce-helm-charts
 ```
 To install a chart:
 ```bash
-helm install my-<chart-name> acerta-helm/<chart-name>
+helm install my-<chart-name> ce-helm/<chart-name>
 ```
 To uninstall the chart:
 ```bash
 helm delete my-<chart-name>
-```
-Registering the helm repo in ArgoCD:
-
-```bash
-cat <<EOF | kubectl create -f -
-apiVersion: v1
-kind: Secret
-metadata:
-  name: acerta-helm
-  namespace: argocd
-  labels:
-    argocd.argoproj.io/secret-type: repository
-stringData:
-  url: https://github.com/Acerta-DEV
-  name: acerta-helm
-  #type: helm
-  #username: cbonami
-  #password: my-password
-EOF
 ```
 
 ## Container Registry by GitHub
