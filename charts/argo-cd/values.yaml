@@ -21,6 +21,12 @@ argo-cd:
         - type: helm
           name: ce-helm
           url: https://acerta-dev.github.io/ce-helm-charts
+          passwordSecret:
+            name: acerta-dev-repo-pat
+            key: password
+          usernameSecret:
+            name: acerta-dev-repo-pat
+            key: username
         - type: helm
           name: elastic
           url: https://helm.elastic.co
