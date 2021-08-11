@@ -17,6 +17,23 @@ RUN echo 'alias h="helm"' >> ~/.bashrc
 # install kubeseal
 RUN curl -Lo /usr/local/bin/kubeseal https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.16.0/kubeseal-linux-amd64 && chmod +x /usr/local/bin/kubeseal
 
+# install krew
+RUN set -x; cd "$(mktemp -d)" && \
+  OS="$(uname | tr '[:upper:]' '[:lower:]')" && \
+  ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" && \
+  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew.tar.gz" && \
+  tar zxvf krew.tar.gz && \
+  KREW=./krew-"${OS}_${ARCH}" && \
+  "$KREW" install krew
+RUN echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> ~/.bashrc
+
+# install kubectx and kubens
+RUN kubectl krew install ctx && kubectl krew install ns
+
+RUN pip install kube-shell
+
+RUN apk add nano
+
 RUN mkdir /workdir
 WORKDIR /workdir
 
