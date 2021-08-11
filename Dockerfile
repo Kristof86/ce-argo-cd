@@ -28,7 +28,7 @@ RUN set -x; cd "$(mktemp -d)" && \
 RUN echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> ~/.bashrc
 
 # install kubectx and kubens
-RUN kubectl krew install ctx && kubectl krew install ns
+RUN export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" && kubectl krew install ctx && kubectl krew install ns
 
 RUN pip install kube-shell
 
