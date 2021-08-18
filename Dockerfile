@@ -32,7 +32,24 @@ RUN export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" && kubectl krew install ct
 
 RUN pip install kube-shell
 
-RUN apk add nano
+RUN apk add nano tar wget
+
+# install JDK 11
+RUN apk --no-cache add openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
+
+## install Maven
+ENV MAVEN_VERSION 3.8.1
+ENV MAVEN_HOME /usr/lib/mvn
+ENV PATH $MAVEN_HOME/bin:$PATH
+
+RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz && \
+  tar -zxvf apache-maven-$MAVEN_VERSION-bin.tar.gz && \
+  rm apache-maven-$MAVEN_VERSION-bin.tar.gz && \
+  mv apache-maven-$MAVEN_VERSION /usr/lib/mvn
+
+# install telepresence (https://www.getambassador.io/docs/telepresence/latest/reference/inside-container/)
+#RUN apk add --no-cache curl iproute2 sshfs && curl -fL https://app.getambassador.io/download/tel2/linux/amd64/latest/telepresence -o telepresence && \
+#   install -o root -g root -m 0755 telepresence /usr/local/bin/telepresence
 
 RUN mkdir /workdir
 WORKDIR /workdir
