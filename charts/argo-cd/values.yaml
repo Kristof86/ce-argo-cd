@@ -31,6 +31,9 @@ argo-cd:
           name: elastic
           url: https://helm.elastic.co
         - type: helm
+          name: bitnami
+          url: https://charts.bitnami.com/bitnami
+        - type: helm
           name: sealed-secrets
           url: https://bitnami-labs.github.io/sealed-secrets
         - type: git
