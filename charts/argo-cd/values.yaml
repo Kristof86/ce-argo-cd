@@ -72,7 +72,15 @@ argo-cd:
           usernameSecret:
             name: acerta-dev-repo-pat
             key: username
-
+        - type: git
+          name: ce-common-env
+          url: https://github.com/Acerta-DEV/ce-common-env.git
+          passwordSecret:
+            name: acerta-dev-repo-pat
+            key: password
+          usernameSecret:
+            name: acerta-dev-repo-pat
+            key: username
       # https://dev.to/camptocamp-ops/use-kustomize-to-post-render-helm-charts-in-argocd-2ml6
       configManagementPlugins: |
         - name: kustomized-helm
