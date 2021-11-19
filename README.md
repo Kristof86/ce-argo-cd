@@ -1,7 +1,7 @@
 # ce-argo-cd
 
 Purpose:
-* Sets up ArgoCD in self-management mode i.e. ArgoCD will manage (config mgmt, sync, etc) itself as any other application that manages
+* Sets up ArgoCD in self-management mode i.e. ArgoCD will manage (config mgmt, sync, etc) itself as any other application that it manages
 * Also contains a Dockerfile with a couple of standard CLI-tools to access an AKS cluster, `kubectl`, `helm`, argocd cli, etc 
   
 At this moment the azure cli (`az`) cannot be installed on a standard Acerta laptop. 

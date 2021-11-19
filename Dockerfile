@@ -51,6 +51,12 @@ RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/ap
 #RUN apk add --no-cache curl iproute2 sshfs && curl -fL https://app.getambassador.io/download/tel2/linux/amd64/latest/telepresence -o telepresence && \
 #   install -o root -g root -m 0755 telepresence /usr/local/bin/telepresence
 
+# install ms sql tools
+#RUN curl -O https://download.microsoft.com/download/e/4/e/e4e67866-dffd-428c-aac7-8d28ddafb39b/msodbcsql17_17.8.1.1-1_amd64.apk && \
+#    curl -O https://download.microsoft.com/download/e/4/e/e4e67866-dffd-428c-aac7-8d28ddafb39b/mssql-tools_17.8.1.1-1_amd64.apk && \
+#    echo y | apk add --allow-untrusted msodbcsql17_17.8.1.1-1_amd64.apk mssql-tools_17.8.1.1-1_amd64.apk
+#ENV PATH=$PATH:/opt/mssql-tools/bin
+
 RUN mkdir /workdir
 WORKDIR /workdir
 
