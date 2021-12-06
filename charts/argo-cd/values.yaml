@@ -75,6 +75,15 @@ argo-cd:
         - type: helm
           name: sonarqube
           url: https://SonarSource.github.io/helm-chart-sonarqube
+        - type: git
+          name: sonarqube
+          url: https://github.com/Acerta-DEV/sonarqube.git
+          passwordSecret:
+            name: acerta-dev-repo-pat
+            key: password
+          usernameSecret:
+            name: acerta-dev-repo-pat
+            key: username
       # https://dev.to/camptocamp-ops/use-kustomize-to-post-render-helm-charts-in-argocd-2ml6
       configManagementPlugins: |
         - name: kustomized-helm
